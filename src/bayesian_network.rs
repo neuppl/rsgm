@@ -53,6 +53,21 @@ impl BayesianNetwork {
         cur_s.len()
     }
 
+    /// get a list of all parents for `variable`
+    pub fn get_parents(&self, variable: &String) -> &Vec<String> {
+        &self.parents[variable]
+    }
+
+    /// get all variables defined in this Bayesian network
+    pub fn get_variables(&self) -> &Vec<String> {
+        &self.variables
+    }
+
+    /// get all possible assignments to `variable`
+    pub fn get_all_assignments(&self, variable: &String) -> &Vec<String> {
+        &self.states[variable]
+    }
+
     /// Get the conditional probability Pr(variable = variable_value | parent_assignment)
     pub fn get_conditional_prob(&self, variable: &String, variable_value: &String, parent_assignment: &HashMap<String, String>) -> f64 {
         let var_idx = self.get_state_index(variable, variable_value);
