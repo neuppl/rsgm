@@ -39,7 +39,7 @@ pub struct BayesianNetwork {
 }
 
 impl BayesianNetwork {
-    pub fn from_file(fname: &str) -> BayesianNetwork {
+    pub fn from_string(fname: &str) -> BayesianNetwork {
         serde_json::from_str(&fname).unwrap()
     }
 
@@ -94,4 +94,14 @@ impl BayesianNetwork {
         }
         result
     }
+}
+
+
+#[test]
+fn test_conditional() {
+    let sachs = include_str!("../bayesian_networks/sachs.json");
+    let network = BayesianNetwork::from_string(&sachs);
+    let parent_assgn = HashMap::from([ (String::from("Erk"), String::from("HIGH")), 
+                                       (String::from("PKA"), String::from("AVG")) ]);
+    assert_eq!(network.get_conditional_prob(&String::from("Akt"), &String::from("LOW"), &parent_assgn),0.177105936);
 }
