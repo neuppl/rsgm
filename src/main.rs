@@ -21,8 +21,8 @@ fn main() {
     let str = fs::read_to_string(args.file).unwrap();
     let network = bayesian_network::BayesianNetwork::from_file(&str);
     println!("bn: {:?}", network);
-    println!("topo sort: {:?}", network.topological_sort());
-    let parent_assgn = HashMap::from([ (String::from("Erk"), String::from("HIGH")), 
-                                       (String::from("PKA"), String::from("HIGH")) ]);
-    println!("conditional prob: {:?}", network.get_conditional_prob(&String::from("Akt"), &String::from("LOW"), &parent_assgn));
+    // println!("topo sort: {:?}", network.topological_sort());
+    // let parent_assgn = HashMap::from([ (String::from("Erk"), String::from("HIGH")), 
+    //                                    (String::from("PKA"), String::from("HIGH")) ]);
+    // println!("conditional prob: {:?}", network.get_conditional_prob(&String::from("Akt"), &String::from("LOW"), &parent_assgn));
 }
