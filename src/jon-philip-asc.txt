@@ -1,0 +1,5 @@
+Foundations for Scalable Discrete Probabilistic and Sensitivity Reasoning
+
+Reasoning about uncertainty in the continuous domain is a well-studied and
+foundational tool in the toolbox of systems designers for uncertainty
+quantification, reliability certification, and fault diagnosis. However,

@@ -58,6 +58,32 @@ impl BayesianNetwork {
         &self.parents[variable]
     }
 
+    fn parent_h(&self, mut cur_parents: Vec<String>) -> Vec<HashMap<String, String>> {
+        if cur_parents.is_empty() {
+            return vec![HashMap::new()];
+        }
+
+        let mut r : Vec<HashMap<String, String>> = Vec::new();
+        let p = cur_parents.pop().unwrap();
+        let cur_values = self.get_all_assignments(&p);
+        let sub = self.parent_h(cur_parents);
+        
+        // add each assignment onto
+        for v in cur_values {
+            for i in 0..(sub.len()) {
+                let mut new_s = sub[i].clone();
+                new_s.insert(p.clone(), v.clone());
+                r.push(new_s);
+            }
+        }
+        r
+    }
+
+    /// get a vector of all possible assignments to the parents of this variable
+    pub fn parent_assignments(&self, variable: &String) -> Vec<HashMap<String, String>> {
+        self.parent_h(self.get_parents(variable).clone())
+    }
+
     /// get all variables defined in this Bayesian network
     pub fn get_variables(&self) -> &Vec<String> {
         &self.variables
@@ -119,4 +145,12 @@ fn test_conditional() {
     let parent_assgn = HashMap::from([ (String::from("Erk"), String::from("HIGH")), 
                                        (String::from("PKA"), String::from("AVG")) ]);
     assert_eq!(network.get_conditional_prob(&String::from("Akt"), &String::from("LOW"), &parent_assgn),0.177105936);
+}
+
+#[test]
+fn test_parent() {
+    let sachs = include_str!("../bayesian_networks/sachs.json");
+    let network = BayesianNetwork::from_string(&sachs);
+    println!("{:?}", network.parent_assignments(&String::from("Erk")));
+    assert!(false);
 }
