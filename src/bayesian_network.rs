@@ -152,5 +152,4 @@ fn test_parent() {
     let sachs = include_str!("../bayesian_networks/sachs.json");
     let network = BayesianNetwork::from_string(&sachs);
     println!("{:?}", network.parent_assignments(&String::from("Erk")));
-    assert!(false);
 }
