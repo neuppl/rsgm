@@ -1,6 +1,6 @@
 //! A graphical representation of a Bayesian network
 
-use std::collections::HashMap;
+use std::collections::{HashMap, BTreeMap};
 
 use serde::{Serialize, Deserialize};
 use serde_json::{Result, Value};
@@ -116,7 +116,7 @@ impl BayesianNetwork {
     pub fn topological_sort(&self) -> Vec<String> {
         // super naive toposort
         let mut result : Vec<String> = Vec::new();
-        let mut cur_vars: HashMap<String, Vec<String>> = self.variables.iter().map(|v| {
+        let mut cur_vars: BTreeMap<String, Vec<String>> = self.variables.iter().map(|v| {
             (v.clone(), self.parents[v].clone())
         }).collect();
 
