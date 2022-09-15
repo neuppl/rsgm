@@ -1,7 +1,7 @@
 extern crate serde;
 extern crate clap;
 extern crate serde_json;
-use std::{fs, collections::HashMap};
+use std::{fs};
 
 use clap::Parser;
 
@@ -22,7 +22,7 @@ fn main() {
     let network = bayesian_network::BayesianNetwork::from_string(&str);
     println!("bn: {:?}", network);
     // println!("topo sort: {:?}", network.topological_sort());
-    // let parent_assgn = HashMap::from([ (String::from("Erk"), String::from("HIGH")), 
+    // let parent_assgn = HashMap::from([ (String::from("Erk"), String::from("HIGH")),
     //                                    (String::from("PKA"), String::from("HIGH")) ]);
     // println!("conditional prob: {:?}", network.get_conditional_prob(&String::from("Akt"), &String::from("LOW"), &parent_assgn));
 }
