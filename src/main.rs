@@ -1,7 +1,7 @@
-extern crate serde;
 extern crate clap;
+extern crate serde;
 extern crate serde_json;
-use std::{fs};
+use std::fs;
 
 use clap::Parser;
 
@@ -9,11 +9,10 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
 struct Args {
-   /// A JSON Bayesian network file
-   #[clap(short, long, value_parser)]
-   file: String,
+    /// A JSON Bayesian network file
+    #[clap(short, long, value_parser)]
+    file: String,
 }
-
 
 pub mod bayesian_network;
 fn main() {
