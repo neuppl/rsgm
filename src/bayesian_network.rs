@@ -3,7 +3,6 @@
 use std::collections::{HashMap, BTreeMap};
 
 use serde::{Serialize, Deserialize};
-use serde_json::{Result, Value};
 
 /// maps each variable name to a CPT table
 /// - rows are indexed by the current variable's possible values
@@ -23,19 +22,19 @@ use serde_json::{Result, Value};
 /// says Pr(c=c1 | a=a1, b=b1) = 0.1
 ///      Pr(c=c1 | a=a2, b=b1) = 0.4
 ///      Pr(c=c1 | a=a1, b=b3) = 0.3
-type cpt = HashMap<String, Vec<Vec<f64>>>;
+type CPT = HashMap<String, Vec<Vec<f64>>>;
 /// maps each variable name to a list of that variable's possible values
-type states = HashMap<String, Vec<String>>;
+type States = HashMap<String, Vec<String>>;
 /// maps each variable name to a list of that variable's parents
-type parents = HashMap<String, Vec<String>>;
+type Parents = HashMap<String, Vec<String>>;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct BayesianNetwork {
     network: String,
     variables: Vec<String>,
-    cpts: cpt,
-    states: states,
-    parents: parents
+    cpts: CPT,
+    states: States,
+    parents: Parents
 }
 
 impl BayesianNetwork {
