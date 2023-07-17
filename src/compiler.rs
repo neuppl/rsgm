@@ -47,7 +47,11 @@ impl BayesianNetworkCNF {
 
                 for parent_assignment in network.parent_assignments(&variable) {
                     let cur_param = VarLabel::new_usize(var_count);
-                    let cur_prob = network.conditional_probability(&variable, variable_assignment, &parent_assignment);
+                    let cur_prob = network.conditional_probability(
+                        &variable,
+                        variable_assignment,
+                        &parent_assignment,
+                    );
                     wmc_params.insert(cur_param, (RealSemiring::one(), RealSemiring(cur_prob)));
                     var_count += 1;
 
