@@ -92,6 +92,15 @@ impl BayesianNetworkCNF {
     pub fn params(&self) -> &WmcParams<RealSemiring> {
         &self.params
     }
+
+    pub fn to_dimacs(&self) -> String {
+        format!(
+            "p cnf {} {}{}",
+            self.cnf.clauses().len(),
+            self.cnf.num_vars(),
+            self.cnf.to_dimacs()
+        )
+    }
 }
 
 /// construct a CNF for the two TERMS (i.e., conjunctions of literals) t1 => t2

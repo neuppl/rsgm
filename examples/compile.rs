@@ -32,7 +32,7 @@ struct Args {
     #[clap(short, long, value_parser)]
     file: String,
 
-    /// The compile mode (either 'bdd' or 'sdd')
+    /// The compile mode ('bdd', 'sdd', 'bdd_using_builder', 'topdown', 'print')
     #[clap(short, long, value_parser)]
     mode: String,
 
@@ -51,10 +51,16 @@ struct Args {
     /// Name of a variable value to query
     #[clap(long, value_parser)]
     query_value: Option<String>,
+
+    /// If true, print the Bayesian Network CNF in DIMACS form
+    #[clap(long, value_parser)]
+    dimacs: bool,
 }
 
-fn compile_bdd_cnf(args: &Args, network: BayesianNetwork) {
-    let bn = BayesianNetworkCNF::from_bayesian_network(&network);
+fn compile_bdd(args: &Args, network: &BayesianNetwork) {
+    println!("############################\n\tCompiling BDD\n############################");
+
+    let bn = BayesianNetworkCNF::from_bayesian_network(network);
     let compiler = RobddBuilder::<AllTable<BddPtr>>::new_default_order(bn.cnf().num_vars());
 
     println!("Compiling...");
@@ -89,7 +95,8 @@ fn compile_bdd_cnf(args: &Args, network: BayesianNetwork) {
     }
 }
 
-fn compile_bdd(_args: &Args, network: BayesianNetwork) {
+fn compile_bdd_using_builder(network: &BayesianNetwork) {
+    println!("############################\n\tCompiling using RobddBuilder\n############################");
     let compiler = RobddBuilder::<AllTable<BddPtr>>::new_default_order(1);
 
     // let mut clauses : Vec<Vec<Literal>> = Vec::new();
@@ -169,9 +176,9 @@ fn compile_bdd(_args: &Args, network: BayesianNetwork) {
     println!("final size: {}", r.count_nodes());
 }
 
-fn compile_sdd_cnf(network: BayesianNetwork) {
+fn compile_sdd_cnf(network: &BayesianNetwork) {
     println!("############################\n\tCompiling in SDD mode\n############################");
-    let bn = BayesianNetworkCNF::from_bayesian_network(&network);
+    let bn = BayesianNetworkCNF::from_bayesian_network(network);
     // println!("{}", cnf.to_dimacs());
     println!("Building dtree");
     let start = Instant::now();
@@ -190,9 +197,9 @@ fn compile_sdd_cnf(network: BayesianNetwork) {
     println!("Compiled\n\tCompile time: {:?}\n\tSize: {sz}", duration);
 }
 
-fn compile_topdown(network: BayesianNetwork) {
+fn compile_topdown(network: &BayesianNetwork) {
     println!("############################\n\tCompiling topdown\n############################");
-    let bn = BayesianNetworkCNF::from_bayesian_network(&network);
+    let bn = BayesianNetworkCNF::from_bayesian_network(network);
     let order = VarOrder::linear_order(bn.cnf().num_vars());
     let compiler = StandardDecisionNNFBuilder::new(order);
 
@@ -204,21 +211,21 @@ fn compile_topdown(network: BayesianNetwork) {
     println!("Compiled\n\tCompile time: {:?}\n\tSize: {sz}", duration);
 }
 
-fn print_dimacs(bn: BayesianNetwork) {
-    let bn = BayesianNetworkCNF::from_bayesian_network(&bn);
-    println!("p cnf {} {}", bn.cnf().clauses().len(), bn.cnf().num_vars());
-    println!("{}", bn.cnf().to_dimacs());
-}
-
 fn main() {
     let args = Args::parse();
     let bn = BayesianNetwork::from_json(fs::read_to_string(&args.file).unwrap().as_str());
     match args.mode.as_str() {
-        "sdd" => compile_sdd_cnf(bn),
-        "bdd" => compile_bdd(&args, bn),
-        "bdd_cnf" => compile_bdd_cnf(&args, bn),
-        "topdown" => compile_topdown(bn),
-        "print_dimacs" => print_dimacs(bn),
-        _ => panic!("unrecognized mode"),
+        "sdd" => compile_sdd_cnf(&bn),
+        "bdd" => compile_bdd(&args, &bn),
+        "bdd_using_builder" => compile_bdd_using_builder(&bn),
+        "topdown" => compile_topdown(&bn),
+        "print" => println!("printing BN: {:#?}", bn),
+        _ => panic!(
+            "unrecognized mode; expected one of 'bdd', 'sdd', 'topdown', 'bdd_using_builder'"
+        ),
+    }
+    if args.dimacs {
+        let bn = BayesianNetworkCNF::from_bayesian_network(&bn);
+        println!("{}", bn.to_dimacs());
     }
 }
