@@ -2,6 +2,13 @@
 name = "rsgm"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+description = "A small library for importing Bayesian networks into Rust."
+homepage = "https://github.com/neuppl/rsgm/" # eventually: neuppl site!
+repository = "https://github.com/neuppl/rsgm/"
+keywords = ["bayesian", "networks", "decision-diagrams", "bayesian-networks"]
+categories = ["data-structures", "encoding"]
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
