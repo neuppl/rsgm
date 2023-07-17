@@ -19,7 +19,7 @@ struct Args {
 fn main() {
     let args = Args::parse();
     let str = fs::read_to_string(args.file).unwrap();
-    let network = bayesian_network::BayesianNetwork::from_string(&str);
+    let network = bayesian_network::BayesianNetwork::from_json(&str);
     println!("bn: {:?}", network);
     // println!("topo sort: {:?}", network.topological_sort());
     // let parent_assgn = HashMap::from([ (String::from("Erk"), String::from("HIGH")),
