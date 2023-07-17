@@ -18,11 +18,17 @@ jobs:
           - ubuntu-latest
           - macos-latest
           - windows-latest
+        toolchain:
+          - stable
+          - beta
+          - nightly
 
     runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v3
+    - name: Rustup ${{ matrix.toolchain }}
+      run: rustup update ${{ matrix.toolchain }} && rustup default ${{ matrix.toolchain }}
     - name: Build
       run: cargo build --verbose
     - name: Run tests
