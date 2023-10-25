@@ -22,7 +22,15 @@ from a JSON representation. The example in the `examples` directory provides
 the most basic example to do so; this simply prints the JSON representation.
 
 ```
-cargo run --example rsbn -- -f bayesian_networks/sachs.json
+cargo run --example compile -- -f bayesian_networks/sachs.json -m print
+```
+
+In addition, it demonstrates how to compile the Bayesian Network into a CNF,
+which can then be represented by various decision diagram formats:
+
+```
+cargo run --example compile -- -f bayesian_networks/sachs.json -m bdd
+cargo run --example compile -- -f bayesian_networks/sachs.json -m sdd
 ```
 
 Here is a "kitchen sink" example that showcases the public API:

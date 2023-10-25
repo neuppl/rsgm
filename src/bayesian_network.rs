@@ -74,7 +74,7 @@ impl BayesianNetwork {
 
     /// get a list of all parents for `variable`
     /// ```
-    /// use rsgm::bayesian_network::BayesianNetwork;
+    /// use rsgm::BayesianNetwork;
     ///
     /// // models the collider A, B -> C
     /// static NETWORK: &str = r#"{
@@ -132,7 +132,7 @@ impl BayesianNetwork {
 
     /// get a vector of all possible assignments to the parents of this variable
     /// ```
-    /// use rsgm::bayesian_network::BayesianNetwork;
+    /// use rsgm::BayesianNetwork;
     /// use std::collections::HashMap;
     ///
     /// // models the collider A, B -> C
@@ -172,7 +172,7 @@ impl BayesianNetwork {
 
     /// get all variables defined in this Bayesian network
     /// ```
-    /// use rsgm::bayesian_network::BayesianNetwork;
+    /// use rsgm::BayesianNetwork;
     ///
     /// // models the collider A, B -> C
     /// static NETWORK: &str = r#"{
@@ -208,7 +208,7 @@ impl BayesianNetwork {
 
     /// get all possible assignments to `variable`
     /// ```
-    /// use rsgm::bayesian_network::BayesianNetwork;
+    /// use rsgm::BayesianNetwork;
     ///
     /// // models the collider A, B -> C
     /// static NETWORK: &str = r#"{
@@ -242,7 +242,7 @@ impl BayesianNetwork {
 
     /// Get the conditional probability Pr(variable = variable_value | parent_assignment)
     /// ```
-    /// use rsgm::bayesian_network::BayesianNetwork;
+    /// use rsgm::BayesianNetwork;
     /// use std::collections::HashMap;
     ///
     /// // models the collider A, B -> C
@@ -299,7 +299,7 @@ impl BayesianNetwork {
     /// Produces a list of variables in topological order;
     /// breaks ties with the order of `variables`
     /// ```
-    /// use rsgm::bayesian_network::BayesianNetwork;
+    /// use rsgm::BayesianNetwork;
     ///
     /// // models the collider A, B -> C
     /// static NETWORK: &str = r#"{
