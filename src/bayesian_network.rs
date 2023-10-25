@@ -40,10 +40,10 @@ impl BayesianNetwork {
     /// Generate a Bayesian Network from a JSON string.
     /// The JSON string needs to have (in JSON types):
     /// - `network`: `String`
-    /// - `variables`: [String]
-    /// - `cpts`: { String: [[Number]] }
-    /// - `states`: { String: [String] }
-    /// - `parents`: { String: [String] }
+    /// - `variables`: String[]
+    /// - `cpts`: { String: Number[][] }
+    /// - `states`: { String: String[] }
+    /// - `parents`: { String: String[] }
     pub fn from_json(str: &str) -> BayesianNetwork {
         match serde_json::from_str(str) {
             Ok(bn) => bn,
